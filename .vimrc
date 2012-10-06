@@ -22,7 +22,7 @@ else
     let g:isGUI = 0
 endif
 
-set pastetoggle=<F11>
+set pastetoggle=<F11> "vim paste mode
 set nocompatible    " 关闭兼容模式
 syntax enable       " 语法高亮
 filetype plugin on  " 文件类型插件
@@ -93,7 +93,7 @@ endif
 
 " 状态栏
 set laststatus=2      " 总是显示状态栏
-highlight StatusLine cterm=bold ctermfg=green ctermbg=Blue
+highlight StatusLine cterm=bold ctermfg=white ctermbg=darkcyan
 highlight StatusLineNC cterm=bold ctermfg=cyan ctermbg=black
 "highlight Pmenu ctermbg=cyan guibg=LightGray 
 "highlight Pmenu ctermbg=brown gui=bold 
@@ -220,6 +220,7 @@ let Tlist_Process_File_Always = 1
 
 " OmniCppComplete.vim
 " http://www.vim.org/scripts/script.php?script_id=1520
+set complete=.,b,d,i,t,u,w
 set completeopt=menu,preview,longest
 let OmniCpp_ShowPrototypeInAbbr = 1
 let OmniCpp_DefaultNamespaces = ["std"]     " 逗号分割的字符串
