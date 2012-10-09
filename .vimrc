@@ -93,7 +93,7 @@ endif
 
 " 状态栏
 set laststatus=2      " 总是显示状态栏
-highlight StatusLine cterm=bold ctermfg=white ctermbg=darkcyan
+highlight StatusLine cterm=bold ctermfg=green ctermbg=Blue
 highlight StatusLineNC cterm=bold ctermfg=cyan ctermbg=black
 "highlight Pmenu ctermbg=cyan guibg=LightGray 
 "highlight Pmenu ctermbg=brown gui=bold 
@@ -180,10 +180,10 @@ inoremap <leader>w ""<esc>:let leavechar='"'<cr>i
 " 缩写
 iab idate <c-r>=strftime("%Y-%m-%d")<CR>
 iab itime <c-r>=strftime("%H:%M")<CR>
-iab imail Stephen <stephenpcg@gmail.com>
-iab iumail stephen1@mail.ustc.edu.cn
-iab igmail stephenpcg@gmail.com
-iab iname Zhang Cheng
+iab imail YuLaw <huaixiaoz@gmail.com>
+iab iumail huaixiaoz@live.com
+iab igmail huaixiaoz@gmail.com
+iab iname YuLAW
 
 " 插件窗口的宽度，如TagList,NERD_tree等，自己设置
 let s:PlugWinSize =30
@@ -222,6 +222,42 @@ let Tlist_Process_File_Always = 1
 " http://www.vim.org/scripts/script.php?script_id=1520
 set complete=.,b,d,i,t,u,w
 set completeopt=menu,preview,longest
+let g:neocomplcache_enable_at_startup = 1
+let g:neocomplcache_enable_smart_case = 1 " Use SmartCase
+let g:neocomplcache_enable_camel_case_completion = 1
+let g:neocomplcache_enable_underbar_completion = 1
+let g:neocomplcache_min_syntax_length = 3
+let g:neocomplcache_lock_buffer_name_pattern = '/*ku/*'
+
+set completeopt+=longest 
+let g:neocomplcache_enable_auto_select = 1 
+"let g:neocomplcache_disable_auto_complete = 1 
+inoremap <expr><TAB>  pumvisible() ? "\<Down>" : "\<TAB>" 
+"inoremap <expr><CR>  neocomplcache#smart_close_popup() . "\<CR>" 
+" Enable omni completion. 
+ autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS 
+ autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags 
+ autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS 
+ autocmd FileType python setlocal omnifunc=pythoncomplete#Complete 
+ autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags 
+
+" Define keyword. 
+if !exists('g:neocomplcache_keyword_patterns') 
+    let g:neocomplcache_keyword_patterns = {} 
+endif 
+let g:neocomplcache_keyword_patterns['default'] = '\h\w*' 
+
+ if !exists('g:neocomplcache_omni_patterns') 
+ let g:neocomplcache_omni_patterns = {} 
+ endif 
+ let g:neocomplcache_omni_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::' 
+ autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete 
+ let g:neocomplcache_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
+inoremap <expr><TAB>  pumvisible() ? "/<C-n>" : "/<TAB>"
+
+let g:neocomplcache_enable_auto_select = 0
+let g:neocomplcache_enable_quick_match = 1
+
 let OmniCpp_ShowPrototypeInAbbr = 1
 let OmniCpp_DefaultNamespaces = ["std"]     " 逗号分割的字符串
 let OmniCpp_MayCompleteScope = 1
