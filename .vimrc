@@ -253,7 +253,6 @@ let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
  let g:neocomplcache_omni_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::' 
  autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete 
  let g:neocomplcache_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
-inoremap <expr><TAB>  pumvisible() ? "/<C-n>" : "/<TAB>"
 
 let g:neocomplcache_enable_auto_select = 0
 let g:neocomplcache_enable_quick_match = 1
