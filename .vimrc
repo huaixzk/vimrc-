@@ -22,7 +22,7 @@ else
     let g:isGUI = 0
 endif
 
-set pastetoggle=<F11> "vim paste mode
+set pastetoggle=<F11>  "vim paste mode
 set nocompatible    " 关闭兼容模式
 syntax enable       " 语法高亮
 filetype plugin on  " 文件类型插件
@@ -93,15 +93,15 @@ endif
 
 " 状态栏
 set laststatus=2      " 总是显示状态栏
-highlight StatusLine cterm=bold ctermfg=green ctermbg=Blue
+highlight StatusLine cterm=bold ctermfg=yellow ctermbg=blue
+"highlight StatusLine cterm=bold ctermfg=green ctermbg=Blue
 highlight StatusLineNC cterm=bold ctermfg=cyan ctermbg=black
-"highlight Pmenu ctermbg=cyan guibg=LightGray 
-"highlight Pmenu ctermbg=brown gui=bold 
-highlight Pmenu         ctermbg=cyan  ctermfg=black guibg=cyan gui=bold 
-highlight PmenuSel      ctermbg=darkgray ctermfg=white guibg=DarkBlue guifg=White
-highlight PmenuSbar     ctermbg=brown  ctermfg=Brown guibg=Cyan 
-highlight PmenuThumb    ctermfg=black ctermfg=lightblue guifg=White
-
+"highlight Pmenu ctermbg=cyan guibg=LightGray
+"highlight Pmenu ctermbg=brown gui=bold
+highlight Pmenu ctermbg=cyan ctermfg=black guibg=cyan gui=bold
+highlight PmenuSel ctermbg=darkgray ctermfg=white guibg=DarkBlue guifg=White
+highlight PmenuSbar ctermbg=brown ctermfg=Brown guibg=Cyan
+highlight PmenuThumb ctermfg=black ctermfg=lightblue guifg=White
 " 获取当前路径，将$HOME转化为~
 function! CurDir()
     let curdir = substitute(getcwd(), $HOME, "~", "g")
@@ -180,14 +180,14 @@ inoremap <leader>w ""<esc>:let leavechar='"'<cr>i
 " 缩写
 iab idate <c-r>=strftime("%Y-%m-%d")<CR>
 iab itime <c-r>=strftime("%H:%M")<CR>
-iab imail YuLaw <huaixiaoz@gmail.com>
+iab imail huaixiaoz <huaixiaoz@gmail.com>
 iab iumail huaixiaoz@live.com
 iab igmail huaixiaoz@gmail.com
-iab iname YuLAW
+iab iname huaixiaoz
 
 " 插件窗口的宽度，如TagList,NERD_tree等，自己设置
 let s:PlugWinSize =30
-
+"
 " ShowFunc.vim  <-------- 暂时没有使用
 " http://www.vim.org/scripts/script.php?script_id=397
 " F2打开ShowFunc TagList窗口，显示C/C++函数原型
@@ -197,9 +197,30 @@ let s:PlugWinSize =30
 " taglist.vim
 " http://www.vim.org/scripts/script.php?script_id=273
 " <leader>t 打开TagList窗口，窗口在右边
-
+"在taglist窗口中，可以使用下面的快捷键：
+"<CR>      跳到光标下tag所定义的位置，用鼠标双击此tag功能也一样
+"o         在一个新打开的窗口中显示光标下tag
+"<Space>   显示光标下tag的原型定义
+"u         更新taglist窗口中的tag
+"s         更改排序方式，在按名字排序和按出现顺序排序间切换
+"x         taglist窗口放大和缩小，方便查看较长的tag
+"+         打开一个折叠，同zo
+"-         将tag折叠起来，同zc
+"*         打开所有的折叠，同zR
+"=         将所有tag折叠起来，同zM
+"[[        跳到前一个文件
+"]]        跳到后一个文件
+"q         关闭taglist窗口
+"<F1>      显示帮助
+"使用 :Tlist
+":help taglist.txt  ( ~/.vim/doc/taglist.txt )
+"
 " <leader>t 打开TagList窗口，窗口在右边
 nmap <silent> <leader>t :TlistToggle<cr>
+
+let Tlist_Use_SingleClick = 1
+let Tlist_Process_File_Always = 1
+
 let Tlist_Ctags_Cmd = '/usr/bin/ctags'
 let Tlist_Show_One_File = 1
 let Tlist_Exit_OnlyWindow = 1
@@ -211,17 +232,46 @@ let Tlist_Auto_Open = 0
 let Tlist_Display_Prototype = 1
 let Tlist_Close_On_Select = 0
 
-let Tlist_Use_SingleClick = 1
-let Tlist_Process_File_Always = 1
-
 " minibufexpl.vim
 " http://www.vim.org/scripts/script.php?script_id=159
 " 不需要配置
 
 " OmniCppComplete.vim
 " http://www.vim.org/scripts/script.php?script_id=1520
-set complete=.,b,d,i,t,u,w
-set completeopt=menu,preview,longest
+set tags+=/usr/include/tags
+
+set omnifunc=syntaxcomplete#Complete
+
+let omnicpp_namespacesearch = 1
+let omnicpp_globalscopesearch = 1
+let omnicpp_showaccess = 1
+let omnicpp_showprototypeinabbr = 1     " show function parameters
+let omnicpp_maycompletedot = 1          " autocomplete after .
+let OmniCpp_SelectFirstItem = 2
+let omnicpp_maycompletearrow = 1        " autocomplete after ->
+let omnicpp_maycompletescope = 1        " autocomplete after ::
+let omnicpp_defaultnamespaces = ["std", "_glibcxx_std"]
+""automatically open and close the popup menu / preview window
+"au cursormovedi,insertleave * if pumvisible() == 0|silent! pclose|endif
+""set completeopt=menuone,menu,longest,preview
+""自定义快捷键 ( 若使用neocomplcache插件: 已定义了下面很多映射 )
+"inoremap <expr> <cr>       pumvisible()?"/<c-y>":"/<cr>"
+"inoremap <expr> <c-j>      pumvisible()?"/<pagedown>/<c-n>/<c-p>":"/<c-x><c-o>" "注意cvim.zip另有映射,而且很强大
+inoremap <expr> <c-k>      pumvisible()?"/<pageup>/<c-p>/<c-n>":"/<c-k>"
+inoremap <expr> <c-u>      pumvisible()?"/<c-e>":"/<c-u>"
+"inoremap <expr> <c-p>      pumvisible()?"/<up>":"/<c-p>"
+"inoremap <expr> <c-n>      pumvisible()?"/<down>":"/<c-n>"
+""上面的映射都是在插入模式下的映射，解释如下
+""如果下拉菜单弹出，回车映射为接受当前所选项目，否则，仍映射为回车
+""如果下拉菜单弹出，ctrl-j映射为在下拉菜单中向下翻页。否则映射为ctrl-x ctrl-o
+""如果下拉菜单弹出，ctrl-k映射为在下拉菜单中向上翻页，否则仍映射为ctrl-k
+""如果下拉菜单弹出，ctrl-u映射为ctrl-e，即停止补全，否则，仍映射为ctrl-u
+""如果下拉菜单弹出，ctrl-p映射为在下拉菜单中表示上一项。
+""如果下拉菜单弹出，ctrl-n映射为在下拉菜单中表示下一项。
+"":set omnifunc ? 查看设置的补全插件
+""}}}
+"omnicppcomplete : c/c++ omni-completion with ctags database
+
 let g:neocomplcache_enable_at_startup = 1
 let g:neocomplcache_enable_smart_case = 1 " Use SmartCase
 let g:neocomplcache_enable_camel_case_completion = 1
@@ -252,32 +302,37 @@ let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
  endif 
  let g:neocomplcache_omni_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::' 
  autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete 
- let g:neocomplcache_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
+let g:neocomplcache_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
 
 let g:neocomplcache_enable_auto_select = 0
 let g:neocomplcache_enable_quick_match = 1
 
+set path+=/usr/include/
+set path+=/usr/include/linux/
+
+set completeopt=menu,longest
 let OmniCpp_ShowPrototypeInAbbr = 1
 let OmniCpp_DefaultNamespaces = ["std"]     " 逗号分割的字符串
 let OmniCpp_MayCompleteScope = 1
-let OmniCpp_ShowPrototypeInAbbr = 0
-let OmniCpp_SelectFirstItem = 2
 " c-j自动补全，当补全菜单打开时，c-j,k上下选择
 imap <expr> <c-j>      pumvisible()?"\<C-N>":"\<C-X><C-O>"
-imap <expr> <c-k>      pumvisible()?"\<C-P>":"\<esc>"
+"imap <expr> <c-k>      pumvisible()?"\<C-P>":"\<esc>"
 " f:文件名补全，l:行补全，d:字典补全，]:tag补全
 imap <C-]>             <C-X><C-]>
 imap <C-F>             <C-X><C-F>
 imap <C-D>             <C-X><C-D>
 imap <C-L>             <C-X><C-L>
 
+let g:SuperTabRetainCompletionType = 2
+let g:SuperTabDefaultCompletionType = "<C-X><C-O>" 
+
 " NERD_commenter.vim
 " http://www.vim.org/scripts/script.php?script_id=1218
 " Toggle单行注释/“性感”注释/注释到行尾/取消注释
-map <leader>cc ,c<space>
-map <leader>cs ,cs
-map <leader>c$ ,c$
-map <leader>cu ,cu
+"map <leader>cc ,c<space>
+"map <leader>cs ,cs
+"map <leader>c$ ,c$
+"map <leader>cu ,cu
 
 " 更新ctags和cscope索引
 " href: http://www.vimer.cn/2009/10/把vim打造成一个真正的ide2.html
@@ -498,4 +553,4 @@ set foldclose=all
 set cindent
 set scrolloff=4
 set textwidth=84
-set completeopt=menu,longest,preview
+"set completeopt=menuone,longest,preview
