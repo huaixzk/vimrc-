@@ -279,8 +279,7 @@ let g:neocomplcache_enable_underbar_completion = 1
 let g:neocomplcache_min_syntax_length = 3
 let g:neocomplcache_lock_buffer_name_pattern = '/*ku/*'
 
-set completeopt+=longest 
-let g:neocomplcache_enable_auto_select = 1 
+"let g:neocomplcache_enable_auto_select = 1 
 "let g:neocomplcache_disable_auto_complete = 1 
 inoremap <expr><TAB>  pumvisible() ? "\<Down>" : "\<TAB>" 
 "inoremap <expr><CR>  neocomplcache#smart_close_popup() . "\<CR>" 
@@ -311,9 +310,9 @@ set path+=/usr/include/
 set path+=/usr/include/linux/
 
 set completeopt=menu,longest
-let OmniCpp_ShowPrototypeInAbbr = 1
-let OmniCpp_DefaultNamespaces = ["std"]     " 逗号分割的字符串
-let OmniCpp_MayCompleteScope = 1
+"let OmniCpp_ShowPrototypeInAbbr = 1
+"let OmniCpp_DefaultNamespaces = ["std"]     " 逗号分割的字符串
+"let OmniCpp_MayCompleteScope = 1
 " c-j自动补全，当补全菜单打开时，c-j,k上下选择
 imap <expr> <c-j>      pumvisible()?"\<C-N>":"\<C-X><C-O>"
 "imap <expr> <c-k>      pumvisible()?"\<C-P>":"\<esc>"
@@ -458,8 +457,8 @@ let g:bufExplorerSplitVertical=1     " Split vertically.
 let g:bufExplorerSplitVertSize = s:PlugWinSize  " Split width
 let g:bufExplorerUseCurrentWindow=1  " Open in new window.
 autocmd BufWinEnter \[Buf\ List\] setl nonumber
-nmap <silent> <Leader>b :BufExplorer<CR>
 
+nmap <silent> <Leader>b :BufExplorer<CR>
 
 " mine
 " " "  " " "  "
