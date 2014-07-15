@@ -1,7 +1,6 @@
 "=============================================================================
-" FILE: neocomplete.vim
-" AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-"          manga_osyo (Original)
+" FILE: echodoc.vim
+" AUTHOR: Shougo Matsushita <Shougo.Matsu@gmail.com>
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -27,43 +26,49 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
-function! unite#sources#file_include#define()
-  return s:source
-endfunction
+" For echodoc. "{{{
+let s:doc_dict = {
+      \ 'name' : 'neocomplete',
+      \ 'rank' : 10,
+      \ }
+function! s:doc_dict.search(cur_text) "{{{
+  let item = neocomplete#get_current_neocomplete().completed_item
 
-let s:source = {
-      \ 'name' : 'file_include',
-      \ 'description' : 'candidates from include files',
-      \ 'hooks' : {},
-      \}
-function! s:source.hooks.on_init(args, context) "{{{
-  " From neocomplete include files.
-  let a:context.source__include_files =
-        \ neocomplete#sources#include#get_include_files(bufnr('%'))
-  let a:context.source__path = &path
+  if empty(item)
+    return []
+  endif
+
+  let ret = []
+
+  let abbr = (has_key(item, 'abbr') && item.word !=# item.abbr) ?
+        \ item.abbr : split(item.info, '\n')[0]
+  if has_key(item, 'abbr')
+        \ && abbr ==# item.abbr && len(get(item, 'menu', '')) > 5
+    " Combine menu.
+    let abbr .= ' ' . item.menu
+  endif
+
+  " Skip
+  if len(abbr) < len(item.word) + 2
+    return []
+  endif
+
+  let match = match(abbr, neocomplete#escape_match(item.word))
+  if match > 0
+    call add(ret, { 'text' : abbr[ : match-1] })
+  endif
+
+  call add(ret, { 'text' : item.word, 'highlight' : 'Identifier' })
+  call add(ret, { 'text' : abbr[match+len(item.word) :] })
+
+  return ret
 endfunction"}}}
+"}}}
 
-function! s:source.gather_candidates(args, context) "{{{
-  let files = map(copy(a:context.source__include_files), '{
-        \ "word" : neocomplete#util#substitute_path_separator(v:val),
-        \ "abbr" : neocomplete#util#substitute_path_separator(v:val),
-        \ "source" : "file_include",
-        \ "kind" : "file",
-        \ "action__path" : v:val
-        \ }')
-
-  for word in files
-    " Path search.
-    for path in map(split(a:context.source__path, ','),
-          \ 'neocomplete#util#substitute_path_separator(v:val)')
-      if path != '' && neocomplete#head_match(word.word, path . '/')
-        let word.abbr = word.abbr[len(path)+1 : ]
-        break
-      endif
-    endfor
-  endfor
-
-  return files
+function! neocomplete#echodoc#init() "{{{
+  if neocomplete#exists_echodoc()
+    call echodoc#register(s:doc_dict.name, s:doc_dict)
+  endif
 endfunction"}}}
 
 let &cpo = s:save_cpo
