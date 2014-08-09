@@ -19,7 +19,9 @@ if you like to use it , follow below:
 
 ####Any advice or suggest, *Do not be shame to ask!!*####
 
-blog: [i.huaixiaoz.com](http://i.huaixiaoz.com)
-mail: [hz@huaixiaoz.com](mailto://hz@huaixiaoz.com)
-twitter: [huaixiaoz](http://twitter.com/huaixiaoz)
+----------------
+
+* blog: [i.huaixiaoz.com](http://i.huaixiaoz.com) 
+* mail: [hz@huaixiaoz.com](mailto://hz@huaixiaoz.com)
+* twitter: [huaixiaoz](http://twitter.com/huaixiaoz)
 
