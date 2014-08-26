@@ -22,7 +22,8 @@ else
     let g:isGUI = 0
 endif
 
-set pastetoggle=<F11>
+map <leader>pp :set invpaste<cr>
+set pastetoggle=<F11>  "vim paste mode
 set nocompatible    " 关闭兼容模式
 syntax enable       " 语法高亮
 filetype plugin on  " 文件类型插件
@@ -78,7 +79,7 @@ if (g:isGUI)
     set cursorline
     hi cursorline guibg=#333333
     hi CursorColumn guibg=#333333
-    "set guifont=Consolas\ 14
+    set guifont=Droid\ Sans\ Mono
     "set guifontwide=Consolas\ 14
 endif
 
@@ -217,7 +218,11 @@ let s:PlugWinSize =30
 "
 " <leader>t 打开TagList窗口，窗口在右边
 nmap <silent> <leader>t :TlistToggle<cr>
-"let Tlist_Ctags_Cmd = '/usr/bin/ctags'
+
+let Tlist_Use_SingleClick = 1
+let Tlist_Process_File_Always = 1
+
+let Tlist_Ctags_Cmd = '/usr/bin/ctags'
 let Tlist_Show_One_File = 1
 let Tlist_Exit_OnlyWindow = 1
 let Tlist_Use_Right_Window = 1
@@ -235,7 +240,9 @@ let Tlist_Close_On_Select = 0
 " OmniCppComplete.vim
 " http://www.vim.org/scripts/script.php?script_id=1520
 set tags+=/usr/include/tags
+
 set omnifunc=syntaxcomplete#Complete
+
 let omnicpp_namespacesearch = 1
 let omnicpp_globalscopesearch = 1
 let omnicpp_showaccess = 1
@@ -266,13 +273,47 @@ inoremap <expr> <c-u>      pumvisible()?"/<c-e>":"/<c-u>"
 ""}}}
 "omnicppcomplete : c/c++ omni-completion with ctags database
 
+let g:neocomplcache_enable_at_startup = 1
+let g:neocomplcache_enable_smart_case = 1 " Use SmartCase
+let g:neocomplcache_enable_camel_case_completion = 1
+let g:neocomplcache_enable_underbar_completion = 1
+let g:neocomplcache_min_syntax_length = 3
+let g:neocomplcache_lock_buffer_name_pattern = '/*ku/*'
+
+"let g:neocomplcache_enable_auto_select = 1 
+"let g:neocomplcache_disable_auto_complete = 1 
+inoremap <expr><TAB>  pumvisible() ? "\<Down>" : "\<TAB>" 
+"inoremap <expr><CR>  neocomplcache#smart_close_popup() . "\<CR>" 
+" Enable omni completion. 
+ autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS 
+ autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags 
+ autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS 
+ autocmd FileType python setlocal omnifunc=pythoncomplete#Complete 
+ autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags 
+
+" Define keyword. 
+if !exists('g:neocomplcache_keyword_patterns') 
+    let g:neocomplcache_keyword_patterns = {} 
+endif 
+let g:neocomplcache_keyword_patterns['default'] = '\h\w*' 
+
+ if !exists('g:neocomplcache_omni_patterns') 
+ let g:neocomplcache_omni_patterns = {} 
+ endif 
+ let g:neocomplcache_omni_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::' 
+ autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete 
+let g:neocomplcache_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
+
+let g:neocomplcache_enable_auto_select = 0
+let g:neocomplcache_enable_quick_match = 1
+
 set path+=/usr/include/
 set path+=/usr/include/linux/
 
 set completeopt=menu,longest
-let OmniCpp_ShowPrototypeInAbbr = 1
-let OmniCpp_DefaultNamespaces = ["std"]     " 逗号分割的字符串
-let OmniCpp_MayCompleteScope = 1
+"let OmniCpp_ShowPrototypeInAbbr = 1
+"let OmniCpp_DefaultNamespaces = ["std"]     " 逗号分割的字符串
+"let OmniCpp_MayCompleteScope = 1
 " c-j自动补全，当补全菜单打开时，c-j,k上下选择
 imap <expr> <c-j>      pumvisible()?"\<C-N>":"\<C-X><C-O>"
 "imap <expr> <c-k>      pumvisible()?"\<C-P>":"\<esc>"
@@ -417,8 +458,8 @@ let g:bufExplorerSplitVertical=1     " Split vertically.
 let g:bufExplorerSplitVertSize = s:PlugWinSize  " Split width
 let g:bufExplorerUseCurrentWindow=1  " Open in new window.
 autocmd BufWinEnter \[Buf\ List\] setl nonumber
-nmap <silent> <Leader>b :BufExplorer<CR>
 
+nmap <silent> <Leader>b :BufExplorer<CR>
 
 " mine
 " " "  " " "  "
@@ -474,12 +515,12 @@ vnoremap <S-Del> d"+P
 set foldexpr=1
 
 if has("gui_running")
-    set guioptions-=m " 隐藏菜单栏
-    set guioptions-=T " 隐藏工具栏
-    set guioptions-=L " 隐藏左侧滚动条
-    set guioptions-=r " 隐藏右侧滚动条
-    set guioptions-=b " 隐藏底部滚动条
-    set showtabline=0 " 隐藏Tab栏
+    "set guioptions-=m " 隐藏菜单栏
+    "set guioptions-=T " 隐藏工具栏
+    "set guioptions-=L " 隐藏左侧滚动条
+    "set guioptions-=r " 隐藏右侧滚动条
+    "set guioptions-=b " 隐藏底部滚动条
+    "set showtabline=0 " 隐藏Tab栏
 endif
 " 删除所有行未尾空格
 "nnoremap <f12> :%s/[ \t\r]\+$//g<cr>
