@@ -22,6 +22,7 @@ else
     let g:isGUI = 0
 endif
 
+map <leader>pp :set invpaste<cr>
 set pastetoggle=<F11>  "vim paste mode
 set nocompatible    " 关闭兼容模式
 syntax enable       " 语法高亮
